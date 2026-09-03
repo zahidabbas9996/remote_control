@@ -1,0 +1,22 @@
+name: remote_control
+description: A peer-to-peer Android screen sharing and remote touch control app.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_accessibility_service: ^1.2.0
+  flutter_webrtc: ^0.11.7
+  peerdart: ^0.5.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

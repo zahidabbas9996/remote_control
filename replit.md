@@ -1,9 +1,13 @@
-# [Project name]
+# Remote Control Android App
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Flutter Android app for peer-to-peer screen sharing and remote touch input.
 
 ## Run & Operate
 
+- `cd remote-control && flutter pub get` — install Flutter dependencies
+- `cd remote-control && flutter analyze` — run the verified static check
+- `cd remote-control && flutter test` — run the widget smoke test
+- `cd remote-control && flutter build apk --debug` — build an Android debug APK when an Android SDK is configured
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
@@ -22,15 +26,22 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `remote-control/lib/main.dart` — Flutter UI, PeerDart signaling, WebRTC media, and touch transport
+- `remote-control/android/app/src/main/AndroidManifest.xml` — Android permissions and Accessibility Service registration
+- `remote-control/android/app/src/main/res/xml/accessibility_service_config.xml` — gesture-capable Accessibility Service configuration
+- `remote-control/README.md` — Android setup and device-to-device usage
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- PeerDart replaces the unavailable `flutter_peerjs` package while preserving the PeerJS-style signaling model.
+- WebRTC's native `Helper.requestCapturePermission` and `getDisplayMedia` APIs handle Android MediaProjection.
+- Viewer touch positions are normalized before transport so different device resolutions can be mapped safely.
+- Android Accessibility Service gestures are opt-in and require explicit system settings approval.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The host shares its Android screen and receives remote touch gestures. A viewer connects
+with the host's PeerJS ID and interacts with the shared screen.
 
 ## User preferences
 
@@ -38,7 +49,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The project requires Flutter and an Android SDK; this workspace has Flutter and Java but no Android SDK.
+- The public PeerJS signaling server is suitable for a prototype only; production use should add authenticated pairing and an owned PeerServer.
 
 ## Pointers
 
